@@ -182,6 +182,8 @@ description: 通用、可配置的软件项目上线前「测试+审查」全覆
 关键：用 **AST 抽象语法树比对**而非文件 md5——纯注释/空行/格式化改动=无业务逻辑变更，只跑轻量静态扫描，跳过 P 层实测与 E2E。
 粒度分层：文件级（git diff 拿变更文件）→ 函数/接口级（AST 提取变更函数/路由/handler，精准到函数不整文件重测）→ 数据模型级（DB 模型/权限/外键变更自动标记影响面，喂给 T1 影响面清单）。
 
+**落地引擎**：`scripts/fcc_incremental.py`（纯标准库）——`plan` 子命令产出四态判定+阶段裁剪任务集；`verify --finalize` 跑 L1→L2→L3 出 TRUSTED/SUSPICIOUS/UNTRUSTED；`selftest` 自检 17 项。基线表结构见仓库 `docs/schema-baseline.md`。
+
 ### 2. 阶段自动识别与任务集裁剪（不需人工指定）
 | 阶段 | 识别特征 | 审核集合 |
 |---|---|---|

@@ -100,6 +100,8 @@ Or follow the workflow manually:
 - **Second-line verification L1–L3**: process integrity (no silent failures, no missed scan targets) → result reproduction (confirmed findings 100% reproduced, pass-unit blind sampling 5–30% by stage) → sha256-signed evidence package; emits TRUSTED / SUSPICIOUS / UNTRUSTED gate verdicts
 - **Self-evolution**: every audit round ends with a retrospective; new defect patterns patch the skill in place, rule-pack version +1 recorded in the baseline snapshot
 
+**Incremental engine**: `python3 scripts/fcc_incremental.py plan --repo <dir>` produces the four-state decision + stage-trimmed check set; `verify --finalize` runs the L1→L2→L3 gate; `selftest` runs 17 built-in checks.
+
 ### Standalone frontend checker
 
 ```bash

@@ -43,6 +43,8 @@ AI 编码代理写得快，坏得也快——手工 review 抓不住的：
 - **二次验证 L1–L3**：流程完整性（不漏扫/不静默失败）→ 结果复现（confirmed 100% 复现 + pass 单元按阶段抽样 5%-30%）→ 证据包 sha256 存证，产出 TRUSTED / SUSPICIOUS / UNTRUSTED 门禁状态
 - **自进化**：每轮终审收尾复盘新缺陷模式，当场升级技能，规则版本 +1 写入基线快照
 
+**增量引擎**：`python3 scripts/fcc_incremental.py plan --repo <目录>` 产出四态判定与阶段裁剪任务集；`verify --finalize` 出 L1→L2→L3 门禁结论；`selftest` 自检 17 项。
+
 前端校验脚本：
 
 ```bash

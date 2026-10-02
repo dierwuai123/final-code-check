@@ -78,6 +78,7 @@ Or follow the workflow manually:
 ```
 0. Build references/<project>.md (SSH, paths, containers, test commands, health check, red-lines)
    — keep it local, .gitignore it, never commit real IPs/keys
+0.5 Read audit baseline + git diff/AST → incremental skip decision + detect stage S1–S4 → trim check set
 1. Env verification — git/container/host three-way consistency
 2. T1 test suite — unit + API smoke + regression + impact map
 3. Independent code-review subagent — fail-closed (optional: add canary defects)
@@ -86,7 +87,18 @@ Or follow the workflow manually:
 6. Frontend validation / dependency audit
 7. Compliance red-lines + data isolation + doc-drift check
 8. Final gate — clean git status, md5 aligned, tests green, probe data cleaned up
+9. Second-line verification L1→L2→L3 — process integrity → reproduction/sampling/canary → evidence
+   package signing; produces TRUSTED / SUSPICIOUS / UNTRUSTED verdict
+10. Self-evolution retrospective — patch the skill in place for new defect patterns; rule-pack version +1
 ```
+
+### Incremental audits + stage-aware dispatch (v1.1)
+
+- **AST-based incremental skip**: comment/whitespace/format-only changes never trigger a re-audit; function-level change detection reuses last audit verdicts for untouched units
+- **S1–S4 stage auto-trimming**: prototype / feature-complete / pre-merge / release-gate — the matching T/P subset is selected automatically, no full pen-test spam on prototypes
+- **False-positive suppression**: code-marker waivers (with expiry), context-aware downgrade (escHtml wrapper detected → alert, not vulnerability), subagent three-way output (confirmed / suspect / false_positive) + false-positive knowledge base
+- **Second-line verification L1–L3**: process integrity (no silent failures, no missed scan targets) → result reproduction (confirmed findings 100% reproduced, pass-unit blind sampling 5–30% by stage) → sha256-signed evidence package; emits TRUSTED / SUSPICIOUS / UNTRUSTED gate verdicts
+- **Self-evolution**: every audit round ends with a retrospective; new defect patterns patch the skill in place, rule-pack version +1 recorded in the baseline snapshot
 
 ### Standalone frontend checker
 

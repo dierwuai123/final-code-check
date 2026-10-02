@@ -33,7 +33,15 @@ AI 编码代理写得快，坏得也快——手工 review 抓不住的：
 
 ## 使用
 
-对 AI Agent 说：`跑 final_code_check` / `上线前检测` / `发布前检查`。完整流程（0-8 步）与行业对照见 [SKILL.md](SKILL.md) 与 [英文 README](README.en.md)。
+对 AI Agent 说：`跑 final_code_check` / `上线前检测` / `发布前检查`。完整流程（0-10 步）与行业对照见 [SKILL.md](SKILL.md)、[英文 README](README.en.md)；JSON 配置 schema 与审计基线表结构见 [docs/schema-baseline.md](docs/schema-baseline.md)。
+
+## 增量审核 + 阶段感知调度（v1.1）
+
+- **AST 比对增量跳过**：纯注释/空行/格式化改动不触发重审；函数级变更检测，未改动单元复用上次审计结论
+- **S1–S4 阶段自动裁剪**：原型/功能完成/PR 前/发布门禁，按阶段自动匹配 T/P 审核子集，不盲目跑全套渗透
+- **误报抑制**：代码标记豁免（带有效期）、上下文关联降级、子代理三分类输出（confirmed/suspect/false_positive）+ 误报知识库
+- **二次验证 L1–L3**：流程完整性（不漏扫/不静默失败）→ 结果复现（confirmed 100% 复现 + pass 单元按阶段抽样 5%-30%）→ 证据包 sha256 存证，产出 TRUSTED / SUSPICIOUS / UNTRUSTED 门禁状态
+- **自进化**：每轮终审收尾复盘新缺陷模式，当场升级技能，规则版本 +1 写入基线快照
 
 前端校验脚本：
 

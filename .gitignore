@@ -1,0 +1,12 @@
+# 真实项目配置（references/）不入库——含服务器 IP/SSH/容器信息
+references/*
+!references/example-project.md
+
+# 测试/备份产物
+*.bak
+*.bak_*
+__pycache__/
+*.pyc
+.env
+*.pem
+*.key
